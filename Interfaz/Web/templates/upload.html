@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Image</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto py-8">
+        <h1 class="text-2xl font-bold text-center mb-8">Sube una Imagen para Clasificar</h1>
+        <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
+            <form action="{{ url_for('upload_file') }}" method="POST" enctype="multipart/form-data">
+                <div class="mb-4">
+                    <input type="file" name="file" class="block w-full text-gray-700 border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring focus:ring-blue-300">
+                </div>
+                <button type="submit" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md shadow hover:bg-blue-600">Subir Imagen</button>
+            </form>
+            {% if filename %}
+                <div class="mt-6 text-center">
+                    <h2 class="text-xl font-semibold">Imagen Subida</h2>
+                    <img src="{{ url_for('static', filename='uploads/' + filename) }}" class="w-full mt-4 rounded-lg">
+                    <a href="{{ url_for('classify_image', filename=filename) }}" class="mt-4 inline-block bg-green-500 text-white py-2 px-4 rounded-md shadow hover:bg-green-600">Clasificar Imagen</a>
+                </div>
+            {% endif %}
+            {% if class_name %}
+                <div class="mt-6 text-center">
+                    <h2 class="text-xl font-semibold">Resultado de la Clasificación</h2>
+                    <p class="mt-2 text-lg text-green-600">{{ class_name }}</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
